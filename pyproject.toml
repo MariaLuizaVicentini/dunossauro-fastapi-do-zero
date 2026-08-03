@@ -1,9 +1,9 @@
 [project]
 name = "dunossauro-fastapi"
 version = "0.1.0"
-description = ""
+description = "Meu primeiro projeto com ambiente de desenvolvimento config"
 authors = [
-    {name = "Your Name",email = "you@example.com"}
+    {name = "Maria Luiza",email = "vicentinimalu1@gmail.com"}
 ]
 readme = "README.md"
 requires-python = ">=3.12,<4.0"
