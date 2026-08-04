@@ -1,45 +1,28 @@
 # FastAPI CRUD API - Curso Dunossauro
 
-Repositório dedicado ao desenvolvimento de um projeto prático de CRUD utilizando FastAPI, construído durante os estudos do curso [FastAPI do Zero](https://fastapidozero.dunossauro.com/estavel/) do Dunossauro. 
+Repositório dedicado ao desenvolvimento de um projeto prático de CRUD utilizando FastAPI, desenvolvido durante os estudos do curso [FastAPI do Zero](https://fastapidozero.dunossauro.com/estavel/) do Dunossauro.
 
-Este projeto marca a estruturação do meu primeiro ambiente de desenvolvimento profissional backend, integrando ferramentas modernas de isolamento, gerenciamento de pacotes e conteinerização.
+Este projeto marca a estruturação do meu primeiro ambiente de desenvolvimento backend, utilizando ferramentas modernas para gerenciamento de dependências, ambiente virtual e conteinerização.
 
 ## 🛠️ Tecnologias e Ferramentas
 
-- **Python** (Principal tecnologia da app)
+- **Python** (Linguagem da aplicação)
 - **FastAPI** (Framework)
-- **Poetry** (Gerencia o projeto e o ambiente virtual)
+- **Poetry** (Gerenciamento do projeto e do ambiente virtual)
 - **Pipx** (Instalação e execução de aplicações CLI Python em ambientes isolados)
-- **Docker** (Conteinerização do ambiente)
+- **Docker** (Conteinerização)
 - **Git / gh** (Controle de versão)
-- **Ruff** (analisa e formata o código Python)
-- **Pytest** (Pra escrever os testes)
-- **Taskpy** (Pra nao ter que lembrar todos os comandos da app)
-
+- **Ruff** (Análise e formatação de código Python)
+- **Pytest** (Testes automatizados)
+- **Taskipy** (Atalhos para os comandos do projeto)
 
 ## Sobre o Projeto
 
-O objetivo principal é aplicar os conceitos fundamentais e avançados de desenvolvimento de APIs RESTful com FastAPI, estruturando um ambiente de desenvolvimento robusto, reprodutível e alinhado com as melhores práticas de mercado.
+O objetivo principal é aplicar os conceitos de desenvolvimento de APIs RESTful com FastAPI, estruturando um ambiente de desenvolvimento organizado e alinhado às boas práticas.
 
-
-----
-
-## Comando pra rodar a aplicacao
-
-Comando pra rodar a aplicao até o momento com o poetry
-
-```bash
-poetry run fastapi dev dunossauro_fastapi/app.py
-```
-
-Esse tambem serve:
-
-```bash
-fastapi dev dunossauro_fastapi/app.py
-```
 ---
 
-## Comando pra rodar o Ruff
+## Comando para usar o Ruff
 
 ### Listar os subcomandos disponíveis
 
@@ -50,6 +33,7 @@ poetry run ruff
 ### Analisar o código (lint)
 
 Procura problemas no código, como:
+
 - imports não utilizados;
 - erros de estilo;
 - possíveis bugs;
@@ -61,7 +45,8 @@ poetry run ruff check
 
 ### Formatar o código
 
-Organiza automaticamente a aparência do código, como:
+Organiza automaticamente o código, como:
+
 - indentação;
 - espaçamento;
 - quebras de linha;
@@ -71,16 +56,19 @@ Organiza automaticamente a aparência do código, como:
 ```bash
 poetry run ruff format
 ```
+
 ---
 
-## Comando para usar o pytest
+## Comando para usar o Pytest
 
-- Executa os testes automatizados do projeto e gera o relatório de cobertura no terminal.
+Executa os testes automatizados e gera o relatório de cobertura no terminal.
+
 ```bash
 pytest --cov=dunossauro_fastapi -v
 ```
 
-- Gera um relatório de cobertura em HTML na pasta `htmlcov`.
+Gera um relatório de cobertura em HTML na pasta `htmlcov`.
+
 ```bash
 poetry run coverage html
 ```
@@ -89,4 +77,30 @@ poetry run coverage html
 
 ---
 
-## Comando para usar o taskipy
+## Atalhos Taskipy: comandos para rodar, testar e formatar a aplicacao
+
+Verifique se o ambiente virtual está ativado. Caso não esteja, execute:
+
+```bash
+poetry shell
+```
+
+Após acessar o ambiente, utilize os comandos abaixo.
+
+Verifica problemas no código.
+
+```bash
+task lint
+```
+
+Formata o código conforme a configuração do projeto.
+
+```bash
+task format
+```
+
+Executa a aplicação.
+
+```bash
+task run
+```
