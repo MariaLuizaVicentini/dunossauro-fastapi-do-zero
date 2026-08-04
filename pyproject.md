@@ -125,4 +125,13 @@ Exemplos:
 ```
 
 
+No dia a dia:
+1 - **task run**: inicia a aplicacao
+2 - **task format**: formata automaticamente
+3 - **task test**: executa os testes na pasta de testes
+4 - **git add**: add modificacoes no projeto
+5 - **git commit**: registra mensagem de commit 
+5 - **git push**: envia as alteracoes comitadas pra branch 
+
+
 > É a seção onde **cada ferramenta armazena suas configurações e comandos**, concentrando tudo em um único arquivo de configuração (`pyproject.toml`).
