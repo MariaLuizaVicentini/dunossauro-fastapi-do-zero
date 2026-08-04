@@ -22,6 +22,12 @@ O objetivo principal é aplicar os conceitos fundamentais e avançados de desenv
 
 Comando pra rodar a aplicao até o momento com o poetry
 
-```
+```bash
 poetry run fastapi dev dunossauro_fastapi/app.py
+```
+
+Esse tambem serve:
+
+```bash
+fastapi dev dunossauro_fastapi/app.py
 ```
