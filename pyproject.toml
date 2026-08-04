@@ -45,3 +45,4 @@ lint = 'ruff check'
 format = 'ruff format'
 run = 'fastapi dev dunossauro_fastapi/app.py'
 test = 'pytest -s -x --cov=dunossauro_fastapi -vv'
+coverage = "coverage html"
