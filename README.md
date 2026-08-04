@@ -12,6 +12,10 @@ Este projeto marca a estruturação do meu primeiro ambiente de desenvolvimento 
 - **Pipx** (Instalação e execução de aplicações CLI Python em ambientes isolados)
 - **Docker** (Conteinerização do ambiente)
 - **Git / gh** (Controle de versão)
+- **Ruff** (Linter e formatador de codigo)
+- **Pytest** (Pra escrever os testes)
+- **Taskpy** (Pra nao ter que lembrar todos os comandos da app)
+
 
 ## 📚 Sobre o Projeto
 
