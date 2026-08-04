@@ -16,3 +16,12 @@ Este projeto marca a estruturação do meu primeiro ambiente de desenvolvimento 
 ## 📚 Sobre o Projeto
 
 O objetivo principal é aplicar os conceitos fundamentais e avançados de desenvolvimento de APIs RESTful com FastAPI, estruturando um ambiente de desenvolvimento robusto, reprodutível e alinhado com as melhores práticas de mercado.
+
+
+----
+
+Comando pra rodar a aplicao até o momento com o poetry
+
+```
+poetry run fastapi dev dunossauro_fastapi/app.py
+```
