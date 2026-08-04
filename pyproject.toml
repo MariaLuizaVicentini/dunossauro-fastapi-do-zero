@@ -43,5 +43,5 @@ addopts = '-p no:warnings'
 [tool.taskipy.tasks]
 lint = 'ruff check'
 format = 'ruff format'
-format = 'fastapi dev dunossauro_fastapi/app.py'
+run = 'fastapi dev dunossauro_fastapi/app.py'
 test = 'pytest -s -x --cov=dunossauro_fastapi -vv'

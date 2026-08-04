@@ -86,3 +86,7 @@ poetry run coverage html
 ```
 
 > **Obs.:** Após gerar o relatório, abra o arquivo `http://localhost:5500/htmlcov/index.html` no navegador para visualizar os detalhes da cobertura dos testes.
+
+---
+
+## Comando para usar o taskipy
