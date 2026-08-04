@@ -71,3 +71,18 @@ Organiza automaticamente a aparência do código, como:
 ```bash
 poetry run ruff format
 ```
+---
+
+## Comando para usar o pytest
+
+- Executa os testes automatizados do projeto e gera o relatório de cobertura no terminal.
+```bash
+pytest --cov=dunossauro_fastapi -v
+```
+
+- Gera um relatório de cobertura em HTML na pasta `htmlcov`.
+```bash
+poetry run coverage html
+```
+
+> **Obs.:** Após gerar o relatório, abra o arquivo `http://localhost:5500/htmlcov/index.html` no navegador para visualizar os detalhes da cobertura dos testes.
