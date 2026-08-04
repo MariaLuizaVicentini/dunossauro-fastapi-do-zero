@@ -108,11 +108,21 @@ Exemplos:
 
     # Tarefas/atalhos personalizadas executadas pelo Taskipy
     [tool.taskipy.tasks]
-    lint = 'ruff check'
+    #Analisa o código e aponta erros e problemas de estilo.
+    lint = 'ruff check' 
+    # Formata o código (indentação, aspas, espaços, etc.).
     format = 'ruff format'
-    run = 'fastapi dev dunossauro_fastapi/app.py'
-    test = 'pytest -s -x --cov=dunossauro_fastapi -vv'
-    coverage = 'coverage html'
+    # Corrige automaticamente problemas. É executada antes da task format.
+    pre_format = 'ruff check --fix'
+    # Inicia a aplicação FastAPI em modo de desenvolvimento.
+    run = 'fastapi dev fast_zero/app.py'
+    # Executa o lint antes de rodar os testes.
+    pre_test = 'task lint'
+    # Executa os testes, mostra detalhes e gera a cobertura do pacote fast_zero.
+    test = 'pytest -s -x --cov=fast_zero -vv'
+    # Gera um relatório HTML da cobertura de testes após a execução do pytest.
+    post_test = 'coverage html'
 ```
+
 
 > É a seção onde **cada ferramenta armazena suas configurações e comandos**, concentrando tudo em um único arquivo de configuração (`pyproject.toml`).
