@@ -1,61 +1,128 @@
-# Aplicacoes web
+# Aplicações Web
 
-Sempre quando estamos falando de sistemas web, estamos falando de sistemas que funcionam em REDE.
+Sempre que falamos de sistemas web, estamos falando de sistemas que funcionam em uma **rede**.
 
-A rede é o que permite a conexao e comunicaco de um ou mais disposivitos.
+A rede é o que permite a conexão e a comunicação entre um ou mais dispositivos.
 
+## Tipos de rede
 
-Rede - LAN
-- Rede local curta distancia que temos dentro de casa
+### LAN (Local Area Network)
+- Rede local de curta distância.
+- Exemplo: rede de uma casa ou escritório.
 
-Rede - WAN
-- Rede de longa distancia que conecta cidades 
+### WAN (Wide Area Network)
+- Rede de longa distância.
+- Conecta cidades, estados e países.
 
-Rede - MUNDIAL
-- Rede de longa distancia como a propria internet
-
----
-
-## Comunicao do tipo cliente-servidor
-
-Existem diversos tipos de comunicacao alem dessa, mas a mais importante e essa.
-
-Nesse modelo, temos duas principais entidades:
-
-Cliente
-- Faz requisicoes / solicitacoes pro servidor
-- Obtem respostas apos solicitacao
-
-Servidor
-- Serve a aplicacao pro cliente
-- O responsavel por processar as requisicoes e devolver uma resposta pro client
-
-Aplicaco python
-- cod font e dependencias da app
-
+### Rede mundial
+- A própria Internet.
+- Rede que conecta dispositivos no mundo todo.
 
 ---
 
-# Diferença entre fastAPI e Uvicorn
+# Comunicação cliente-servidor
 
-o fastapi é um framework web que nao tem um servidor de aplicaco, mas possui o uvicorn que é em essencia o servidor da app
+Existem diversos modelos de comunicação, mas o mais comum em aplicações web é o **cliente-servidor**.
 
-O fastapi serve cod, mas nao se auto  quem serve a aplicao na rede é o uvicorn
+Nesse modelo existem duas entidades principais:
 
-uvicorn e responsavel por receber as chamadas de rede e repassar isso pro codigo puro
+## Cliente
+- Faz requisições ao servidor.
+- Recebe uma resposta após a solicitação.
 
-[ Client ]  ←→ requisicao ←→  [ uvicorn ]  ←→ repassa ←→ [ app python ]
+## Servidor
+- Disponibiliza a aplicação para o cliente.
+- Processa as requisições.
+- Retorna uma resposta ao cliente.
+
+## Aplicação Python
+- Contém o código-fonte e as dependências da aplicação.
+
+---
+
+# Diferença entre FastAPI e Uvicorn
+
+O **FastAPI** é um framework web. Ele **não possui um servidor de aplicação próprio**.
+
+O **Uvicorn** é o servidor responsável por disponibilizar a aplicação na rede.
+
+Enquanto o FastAPI define o comportamento da aplicação, o Uvicorn recebe as requisições da rede e as repassa para o código Python.
+
+```text
+[ Cliente ] ←→ requisição ←→ [ Uvicorn ] ←→ [ Aplicação Python (FastAPI) ]
+```
 
 ---
 
 # Loopback
 
-Um loop de solicitacao e retorno
+É o cenário em que utilizamos a própria máquina para fazer requisições à aplicação.
 
-Usamos a rede local pra codar e testar a app, portanto, o nosso pc é o CLIENTE e também o SERVIDOR ao mesmo tempo.
+Durante o desenvolvimento, o computador atua como **cliente** e **servidor** ao mesmo tempo.
 
 ---
 
-# IP da minha maquina
+# Modelo padrão da Web
 
-'172.31.93.235'
+## URL
+- É um endereço de rede utilizado para acessar um dispositivo ou serviço.
+
+### Protocolo
+- Indica o protocolo utilizado para a comunicação.
+
+```text
+http://
+```
+
+
+### Endereço
+- Indica o endereço (ou domínio) do dispositivo onde a aplicação está sendo executada.
+
+```text
+127.0.0.1
+```
+
+
+### Porta
+- Indica a porta utilizada para estabelecer a comunicação com a aplicação.
+
+```text
+:8000
+```
+
+
+### Caminho
+- Onde está o que queremos acessar
+```
+/caminho
+```
+
+### Recurso
+- A identificacao do que queremos
+```
+/recurso
+```
+
+### Query
+- Um filtro do recurso
+```
+?query
+```
+
+### Fragmento
+- Especifica um pedaço do recurso
+```
+#fragmento
+```
+
+---
+
+## HTTP
+
+- É um protocolo de transferencia de Hipertexto
+- É o protocolo fundamental na web pra transferencia de dados e comunicacao entre clientes e servidores
+- Ele baseia-se no modelo de requisicao-resposta: onde o cliente faz um requisicao ao servidor, que responde a essa requisicao. 
+- Essas requisicoes e respostas sao formatadas conforme as regras de protocolo HTTP
+
+---
+
