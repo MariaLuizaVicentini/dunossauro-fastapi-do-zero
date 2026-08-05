@@ -30,10 +30,7 @@ Ex:
     client = TesteClient(app)
 ```
 ```python
-    usuario = {
-        "nome": "Maluzera",
-        "idade": 23
-    }
+usuario = {'nome': 'Maluzera', 'idade': 23}
 ```
 
 ---
@@ -46,7 +43,7 @@ Ex:
 - Fazer uma requesicao para uma API
 
 ```python
-    response = client.get("/")
+response = client.get('/')
 ```
 
 ```python
@@ -63,7 +60,7 @@ Ex:
 
 ACAO
 ```python
-    response = client.get("/")
+response = client.get('/')
 ```
 VERIFICACAO/RESULTADO
 ```python
@@ -81,18 +78,18 @@ Entao: Uma mensagem "Hello world!" deve ser exibida com sucesso
 
 Escrevendo o teste com python:
 ```python
-    from http import HTTPStatus
+from http import HTTPStatus
 
-    from fastapi.testclient import TestClient
+from fastapi.testclient import TestClient
 
-    from dunossauro_fastapi.app import app
+from dunossauro_fastapi.app import app
 
 
-    # dado
-    client = TesteClient(app)
-    # entao
-    resonse = client.get("/")
-    # verificacao
-    assert response.json() == {'message': 'Hello world!'}
-    assert response.status_code == HTTPStatus.OK
+# dado
+client = TesteClient(app)
+# entao
+resonse = client.get('/')
+# verificacao
+assert response.json() == {'message': 'Hello world!'}
+assert response.status_code == HTTPStatus.OK
 ```
