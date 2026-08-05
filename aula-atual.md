@@ -1,4 +1,7 @@
-https://www.youtube.com/live/f6bkf67lXLo?si=hS6tGnpHJ2Hvkve_
+https://www.youtube.com/live/WnhDgVLYfx0?si=JFbg-2jRcGZZbpry
+
 
 parei: 
-1:42:08
+nao comecei ainda
+
+essa ai ja e sobre criacao das rotas crud
