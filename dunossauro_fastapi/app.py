@@ -15,12 +15,12 @@ app = FastAPI()
 database = []
 
 
-@app.get('/', response_model=Message, tags=["Hello World"])
+@app.get('/', response_model=Message, tags=['Hello World'])
 def read_root():
     return {'message': 'Hello world!'}
 
 
-@app.post('/users/', response_model=UserPublic, tags=["Users"])
+@app.post('/users/', response_model=UserPublic, tags=['Users'])
 def create_user(user: UserSchema):
     user_with_id = UserDB(id=len(database) + 1, **user.model_dump())
     database.append(user_with_id)
@@ -28,12 +28,12 @@ def create_user(user: UserSchema):
     return user_with_id
 
 
-@app.get('/users/', response_model=UserList, tags=["Users"])
+@app.get('/users/', response_model=UserList, tags=['Users'])
 def read_users():
     return {'users': database}
 
 
-@app.put('/users/{user_id}', response_model=UserPublic, tags=["Users"])
+@app.put('/users/{user_id}', response_model=UserPublic, tags=['Users'])
 def update_user(user_id: int, user: UserSchema):
     if user_id > len(database) or user_id < 1:
         raise HTTPException(
@@ -41,14 +41,13 @@ def update_user(user_id: int, user: UserSchema):
         )
 
     user_with_id = UserDB(id=len(database), **user.model_dump())
-    print(user_with_id)
 
     database[user_id - 1] = user_with_id
 
     return user_with_id
 
 
-@app.delete('/users/{user_id}', response_model=Message, tags=["Users"])
+@app.delete('/users/{user_id}', response_model=Message, tags=['Users'])
 def delete_user(user_id: int):
     if user_id > len(database) or user_id < 1:
         raise HTTPException(
