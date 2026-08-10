@@ -23,9 +23,7 @@ def test_create_user_sucess(client):
 
 
 def test_read_users_sucess(client):
-    mockUsers = {
-        'users': [{'id': 1, 'username': 'malu', 'email': 'test@malu.com'}]
-    }
+    mockUsers = {'users': [{'id': 1, 'username': 'malu', 'email': 'test@malu.com'}]}
 
     response = client.get('users/')
 
