@@ -106,7 +106,6 @@ class User:
     email: Mapped[str] = mapped_column(unique=True)
     password: Mapped[str]
     created_at: Mapped[datetime] = mapped_column(init=False, server_default=func.now())
-
 ```
 
 Por isso, o Model funciona como uma representação da estrutura de uma tabela dentro do código Python.
