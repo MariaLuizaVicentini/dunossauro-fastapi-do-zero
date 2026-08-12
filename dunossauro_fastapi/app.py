@@ -1,9 +1,9 @@
 from http import HTTPStatus
 
-from fastapi import FastAPI, HTTPException
-from sqlalchemy import create_engine, select
-from sqlalchemy.orm import Session
+from fastapi import Depends, FastAPI, HTTPException
+from sqlalchemy import select
 
+from dunossauro_fastapi.database import get_session
 from dunossauro_fastapi.models import User
 from dunossauro_fastapi.schemas import (
     Message,
@@ -12,7 +12,6 @@ from dunossauro_fastapi.schemas import (
     UserPublic,
     UserSchema,
 )
-from dunossauro_fastapi.settings import Settings
 
 app = FastAPI()
 
@@ -25,9 +24,7 @@ def read_root():
 
 
 @app.post('/users/', response_model=UserPublic, tags=['Users'])
-def create_user(user: UserSchema):
-    engine = create_engine(Settings().DATABASE_URL)
-    session = Session(engine)
+def create_user(user: UserSchema, session=Depends(get_session)):
 
     db_user = session.scalar(
         select(User).where((User.email == user.email) | (User.username == user.username))
