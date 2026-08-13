@@ -8,15 +8,12 @@ from dunossauro_fastapi.database import get_session
 from dunossauro_fastapi.models import User
 from dunossauro_fastapi.schemas import (
     Message,
-    UserDB,
     UserList,
     UserPublic,
     UserSchema,
 )
 
 app = FastAPI()
-
-database = []
 
 
 @app.get('/', response_model=Message, tags=['Hello World'])
@@ -27,63 +24,67 @@ def read_root():
 @app.post('/users/', response_model=UserPublic, tags=['Users'])
 def create_user(user: UserSchema, session: Session = Depends(get_session)):
 
-    db_user = session.scalar(
+    user_db = session.scalar(
         select(User).where((User.email == user.email) | (User.username == user.username))
     )
 
-    if db_user:
-        if db_user.username == user.username:
+    if user_db:
+        if user_db.username == user.username:
             raise HTTPException(
                 status_code=HTTPStatus.CONFLICT,
-                detail=f'Username já existe: {db_user.username}',
+                detail=f'Username já existe: {user_db.username}',
             )
-        elif db_user.email == user.email:
+        elif user_db.email == user.email:
             raise HTTPException(
                 status_code=HTTPStatus.CONFLICT,
-                detail=f'Email já existe: {db_user.email}',
+                detail=f'Email já existe: {user_db.email}',
             )
 
-    db_user = User(username=user.username, email=user.email, password=user.password)
-    session.add(db_user)
+    user_db = User(username=user.username, email=user.email, password=user.password)
+    session.add(user_db)
     session.commit()
-    session.refresh(db_user)
+    session.refresh(user_db)
 
-    return db_user
+    return user_db
 
 
 @app.get('/users/', response_model=UserList, tags=['Users'])
 def read_users(
-    limit: int = 10,
-    offset: int = 0,
-    session: Session = Depends(get_session)
+    limit: int = 10, offset: int = 0, session: Session = Depends(get_session)
 ):
-    users = session.scalars(
-        select(User).limit(limit).offset(offset)
-    )
+    users = session.scalars(select(User).limit(limit).offset(offset))
     return {'users': users}
 
 
 @app.put('/users/{user_id}', response_model=UserPublic, tags=['Users'])
-def update_user(user_id: int, user: UserSchema):
-    if user_id > len(database) or user_id < 1:
+def update_user(user_id: int, user: UserSchema, session: Session = Depends(get_session)):
+    user_db = session.scalar(select(User).where(User.id == user_id))
+
+    if not user_db:
         raise HTTPException(
-            status_code=HTTPStatus.NOT_FOUND, detail='Usuario nao encontrado'
+            status_code=HTTPStatus.NOT_FOUND, detail='User nao encontrado'
         )
 
-    user_with_id = UserDB(id=len(database), **user.model_dump())
+    user_db.username = user.username
+    user_db.email = user.email
+    user_db.password = user.password
+    session.add(user_db)
+    session.commit()
+    session.refresh(user_db)
 
-    database[user_id - 1] = user_with_id
-
-    return user_with_id
+    return user_db
 
 
 @app.delete('/users/{user_id}', response_model=Message, tags=['Users'])
-def delete_user(user_id: int):
-    if user_id > len(database) or user_id < 1:
+def delete_user(user_id: int, session: Session = Depends(get_session)):
+    user_db = session.scalar(select(User).where(User.id == user_id))
+
+    if not user_db:
         raise HTTPException(
-            status_code=HTTPStatus.NOT_FOUND, detail='Usuario nao encontrado'
+            status_code=HTTPStatus.NOT_FOUND, detail='User nao encontrado'
         )
 
-    del database[user_id - 1]
+    session.delete(user_db)
+    session.commit()
 
     return {'message': 'Usuario deletado com sucesso'}
