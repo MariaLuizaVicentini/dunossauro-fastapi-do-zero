@@ -2,6 +2,7 @@ from http import HTTPStatus
 
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy import select
+from sqlalchemy.orm import Session
 
 from dunossauro_fastapi.database import get_session
 from dunossauro_fastapi.models import User
@@ -24,7 +25,7 @@ def read_root():
 
 
 @app.post('/users/', response_model=UserPublic, tags=['Users'])
-def create_user(user: UserSchema, session=Depends(get_session)):
+def create_user(user: UserSchema, session: Session = Depends(get_session)):
 
     db_user = session.scalar(
         select(User).where((User.email == user.email) | (User.username == user.username))
@@ -51,8 +52,15 @@ def create_user(user: UserSchema, session=Depends(get_session)):
 
 
 @app.get('/users/', response_model=UserList, tags=['Users'])
-def read_users():
-    return {'users': database}
+def read_users(
+    limit: int = 10,
+    offset: int = 0,
+    session: Session = Depends(get_session)
+):
+    users = session.scalars(
+        select(User).limit(limit).offset(offset)
+    )
+    return {'users': users}
 
 
 @app.put('/users/{user_id}', response_model=UserPublic, tags=['Users'])
