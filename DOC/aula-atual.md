@@ -1,1 +1,4 @@
-https://www.youtube.com/live/I7IrmN7jMqE?si=c3FL5aeg6Fdgz0tv
+https://www.youtube.com/live/bm7_rA7NOB4?si=9jEaJ5i2lBdKHCHW
+
+
+1:37:00
