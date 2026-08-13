@@ -31,7 +31,7 @@ def test_read_users_with_users_sucess(client, user):
     assert response.json() == {'users': [user_schema]}
 
 
-def test_update_user_success(client):
+def test_update_user_success(client, user):
     payload = {
         'username': 'malu',
         'email': 'test@malu.com',
@@ -55,7 +55,7 @@ def test_update_user_error(client):
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
-def test_delete_user_success(client):
+def test_delete_user_success(client, user):
     message_success = {'message': 'Usuario deletado com sucesso'}
 
     response = client.delete('/users/1')
@@ -65,7 +65,7 @@ def test_delete_user_success(client):
 
 
 def test_delete_user_error(client):
-    message_success = {'detail': 'Usuario nao encontrado'}
+    message_success = {'detail': 'User nao encontrado'}
 
     response = client.delete('/users/1')
 
