@@ -1,8 +1,9 @@
 from http import HTTPStatus
 
+from dunossauro_fastapi.schemas import UserPublic
+
 
 def test_create_user_sucess(client):
-
     payload = {
         'username': 'malu',
         'email': 'test@malu.com',
@@ -15,16 +16,22 @@ def test_create_user_sucess(client):
 
 
 def test_read_users_sucess(client):
-    mockUsers = {'users': [{'id': 1, 'username': 'malu', 'email': 'test@malu.com'}]}
-
-    response = client.get('users/')
+    response = client.get('/users')
 
     assert response.status_code == HTTPStatus.OK
-    assert response.json() == mockUsers
+    assert response.json() == {'users': []}
+
+
+def test_read_users_with_users_sucess(client, user):
+    user_schema = UserPublic.model_validate(user).model_dump()
+
+    response = client.get('/users')
+
+    assert response.status_code == HTTPStatus.OK
+    assert response.json() == {'users': [user_schema]}
 
 
 def test_update_user_success(client):
-
     payload = {
         'username': 'malu',
         'email': 'test@malu.com',
@@ -37,7 +44,6 @@ def test_update_user_success(client):
 
 
 def test_update_user_error(client):
-
     payload = {
         'username': 'malu',
         'email': 'test@malu.com',
