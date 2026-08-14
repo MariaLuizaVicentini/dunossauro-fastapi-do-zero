@@ -24,24 +24,18 @@ def create_user(user: UserSchema, session: Session = Depends(get_session)):
         select(User).where((User.email == user.email) | (User.username == user.username))
     )
 
-    if user_db:
-        if user_db.username == user.username:
-            raise HTTPException(
-                status_code=HTTPStatus.CONFLICT,
-                detail=f'Username já existe: {user_db.username}',
-            )
-        elif user_db.email == user.email:
-            raise HTTPException(
-                status_code=HTTPStatus.CONFLICT,
-                detail=f'Email já existe: {user_db.email}',
-            )
-
     user_db = User(username=user.username, email=user.email, password=user.password)
-    session.add(user_db)
-    session.commit()
-    session.refresh(user_db)
 
-    return user_db
+    try:
+        session.add(user_db)
+        session.commit()
+        session.refresh(user_db)
+
+        return user_db
+    except IntegrityError:
+        raise HTTPException(
+            status_code=HTTPStatus.CONFLICT, detail='Username ou email ja existe'
+        )
 
 
 @app.get('/users/', response_model=UserList, tags=['Users'])
