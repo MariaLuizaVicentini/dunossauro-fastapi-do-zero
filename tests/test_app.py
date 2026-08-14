@@ -55,6 +55,31 @@ def test_update_user_error(client):
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
+def test_update_integrity_error(client, user):
+    # insere o segundo user: fausto jaguara
+    client.post(
+        '/users',
+        json={
+            'username': 'fausto',
+            'email': 'fausto@example.com',
+            'password': 'secret',
+        },
+    )
+
+    # altera o user das fixture pra fausto jaguara
+    response = client.put(
+        f'/users/{user.id}',
+        json={
+            'username': 'fausto',
+            'email': 'bob@example.com',
+            'password': 'mynewpassword',
+        },
+    )
+
+    assert response.status_code == HTTPStatus.CONFLICT
+    assert response.json() == {'detail': 'Username ou email ja existe'}
+
+
 def test_delete_user_success(client, user):
     message_success = {'message': 'Usuario deletado com sucesso'}
 
