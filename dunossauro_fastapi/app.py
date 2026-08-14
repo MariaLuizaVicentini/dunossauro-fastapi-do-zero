@@ -2,6 +2,7 @@ from http import HTTPStatus
 
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from dunossauro_fastapi.database import get_session
@@ -68,11 +69,18 @@ def update_user(user_id: int, user: UserSchema, session: Session = Depends(get_s
     user_db.username = user.username
     user_db.email = user.email
     user_db.password = user.password
-    session.add(user_db)
-    session.commit()
-    session.refresh(user_db)
 
-    return user_db
+    try:
+        session.add(user_db)
+        session.commit()
+        session.refresh(user_db)
+
+        return user_db
+    except IntegrityError:
+        raise HTTPException(
+            detail='Username ou email ja existe',
+            status_code=HTTPStatus.CONFLICT,
+        )
 
 
 @app.delete('/users/{user_id}', response_model=Message, tags=['Users'])
