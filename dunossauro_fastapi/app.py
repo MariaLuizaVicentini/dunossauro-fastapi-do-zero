@@ -17,11 +17,6 @@ from dunossauro_fastapi.schemas import (
 app = FastAPI()
 
 
-@app.get('/', response_model=Message, tags=['Hello World'])
-def read_root():
-    return {'message': 'Hello world!'}
-
-
 @app.post('/users/', response_model=UserPublic, tags=['Users'])
 def create_user(user: UserSchema, session: Session = Depends(get_session)):
 
