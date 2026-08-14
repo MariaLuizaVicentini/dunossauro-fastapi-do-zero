@@ -11,8 +11,21 @@ def test_create_user_sucess(client):
     }
 
     response = client.post('/users/', json=payload)
-    print(vars(response))
     assert response.status_code == HTTPStatus.OK
+
+
+def test_create_integrity_error(client, user):
+    response = client.post(
+        '/users',
+        json={
+            'username': 'Teste',
+            'email': 'fausto@example.com',
+            'password': 'secret',
+        },
+    )
+
+    assert response.status_code == HTTPStatus.CONFLICT
+    assert response.json() == {'detail': 'Username ou email ja existe'}
 
 
 def test_read_users_sucess(client):
