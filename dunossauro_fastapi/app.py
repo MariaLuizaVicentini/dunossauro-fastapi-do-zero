@@ -13,6 +13,7 @@ from dunossauro_fastapi.schemas import (
     UserPublic,
     UserSchema,
 )
+from dunossauro_fastapi.security import get_password_hash
 
 app = FastAPI()
 
@@ -24,7 +25,11 @@ def create_user(user: UserSchema, session: Session = Depends(get_session)):
         select(User).where((User.email == user.email) | (User.username == user.username))
     )
 
-    user_db = User(username=user.username, email=user.email, password=user.password)
+    user_db = User(
+        username=user.username,
+        email=user.email,
+        password=get_password_hash(user.password),
+    )
 
     try:
         session.add(user_db)
@@ -57,7 +62,7 @@ def update_user(user_id: int, user: UserSchema, session: Session = Depends(get_s
 
     user_db.username = user.username
     user_db.email = user.email
-    user_db.password = user.password
+    user_db.password = get_password_hash(user.password)
 
     try:
         session.add(user_db)
