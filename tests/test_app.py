@@ -3,6 +3,15 @@ from http import HTTPStatus
 from dunossauro_fastapi.schemas import UserPublic
 
 
+def test_login_for_acess_token(client):
+
+    # preparar
+
+    # acao
+
+    # verificao
+    ...
+
 def test_create_user_sucess(client):
     payload = {
         'username': 'malu',
