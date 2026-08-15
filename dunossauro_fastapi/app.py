@@ -10,6 +10,7 @@ from dunossauro_fastapi.database import get_session
 from dunossauro_fastapi.models import User
 from dunossauro_fastapi.schemas import (
     Message,
+    Token,
     UserList,
     UserPublic,
     UserSchema,
@@ -19,30 +20,23 @@ from dunossauro_fastapi.security import get_password_hash, verify_password
 app = FastAPI()
 
 
-@app.post('/token')
+@app.post('/token', response_model=Token, tags=['Users'])
 def login_for_access_token(
     form_data: OAuth2PasswordRequestForm = Depends(),
     session: Session = Depends(get_session),
-): 
-    user = session.scalar(
-         select(User)
-         .where(User.email == form_data.username)
-    )
-
+):
+    user = session.scalar(select(User).where(User.email == form_data.username))
 
     if not user:
-         raise HTTPException(
-             status_code=HTTPStatus.UNAUTHORIZED,
-             detail='Email ou senha nao cadastrados no banco'
-         )
+        raise HTTPException(
+            status_code=HTTPStatus.UNAUTHORIZED,
+            detail='Email ou senha nao cadastrados no banco',
+        )
 
     if not verify_password(form_data.password, user.password):
-         raise HTTPException(
-             status_code=HTTPStatus.UNAUTHORIZED,
-             detail='Email ou senha incorretos'
-         )
-
-    
+        raise HTTPException(
+            status_code=HTTPStatus.UNAUTHORIZED, detail='Email ou senha incorretos'
+        )
 
 
 @app.post('/users/', response_model=UserPublic, tags=['Users'])
