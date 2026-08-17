@@ -21,6 +21,18 @@ Este projeto marca a estruturação do meu primeiro ambiente de desenvolvimento 
 O objetivo principal é aplicar os conceitos de desenvolvimento de APIs RESTful com FastAPI, estruturando um ambiente de desenvolvimento organizado e alinhado às boas práticas.
 
 ---
+## Ao clonar o repositorio 
+
+- Ative o ambiente
+```
+poetry shell 
+```
+- Instale as dependencias 
+```
+poetry install 
+```
+
+---
 
 ## Comando para usar o Ruff
 
