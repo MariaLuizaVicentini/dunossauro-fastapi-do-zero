@@ -10,6 +10,7 @@ from sqlalchemy.pool import StaticPool
 from dunossauro_fastapi.app import app
 from dunossauro_fastapi.database import get_session
 from dunossauro_fastapi.models import User, table_registry
+from dunossauro_fastapi.security import get_password_hash
 
 
 @pytest.fixture
@@ -60,14 +61,16 @@ def mock_db_time():
 
 @pytest.fixture
 def user(session: Session):
+    password = 'testtest'
+
     user = User(
-        username='Teste',
-        email='teste@test.com',
-        password='testtest',
+        username='Teste', email='teste@test.com', password=get_password_hash(password)
     )
 
     session.add(user)
     session.commit()
     session.refresh(user)
+
+    user.clean_password = password
 
     return user
