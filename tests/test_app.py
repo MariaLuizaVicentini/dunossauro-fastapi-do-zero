@@ -80,7 +80,6 @@ def test_update_user_success(client, user, token):
 
 
 def test_update_integrity_error(client, user, token):
-    # insere o segundo user: fausto jaguara
     client.post(
         '/users',
         json={
@@ -90,7 +89,6 @@ def test_update_integrity_error(client, user, token):
         },
     )
 
-    # altera o user das fixture pra fausto jaguara
     response = client.put(
         f'/users/{user.id}',
         headers={'Authorization': f'Bearer {token}'},
