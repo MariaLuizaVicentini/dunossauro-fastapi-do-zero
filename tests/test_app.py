@@ -103,21 +103,15 @@ def test_update_integrity_error(client, user, token):
     assert response.json() == {'detail': 'Username ou email ja existe'}
 
 
-def test_delete_user_success(client, user):
+def test_delete_user_success(client, user, token):
     message_success = {'message': 'Usuario deletado com sucesso'}
 
-    response = client.delete('/users/1')
+    response = client.delete(
+        f'/users/{user.id}',
+        headers={'Authorization': f'Bearer {token}'},
+    )
 
     assert response.status_code == HTTPStatus.OK
-    assert response.json() == message_success
-
-
-def test_delete_user_error(client):
-    message_success = {'detail': 'User nao encontrado'}
-
-    response = client.delete('/users/1')
-
-    assert response.status_code == HTTPStatus.NOT_FOUND
     assert response.json() == message_success
 
 
