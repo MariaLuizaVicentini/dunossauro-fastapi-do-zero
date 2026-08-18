@@ -85,24 +85,27 @@ def read_users(
 
 
 @app.put('/users/{user_id}', response_model=UserPublic, tags=['Users'])
-def update_user(user_id: int, user: UserSchema, session: Session = Depends(get_session)):
-    user_db = session.scalar(select(User).where(User.id == user_id))
-
-    if not user_db:
+def update_user(
+    user_id: int,
+    user: UserSchema,
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    if current_user.id != user_id:
         raise HTTPException(
-            status_code=HTTPStatus.NOT_FOUND, detail='User nao encontrado'
+            status_code=HTTPStatus.FORBIDDEN, detail='permissões insuficientes'
         )
 
-    user_db.username = user.username
-    user_db.email = user.email
-    user_db.password = get_password_hash(user.password)
+    current_user.email = user.email
+    current_user.username = user.username
+    current_user.password = get_password_hash(user.password)
 
     try:
-        session.add(user_db)
+        session.add(current_user)
         session.commit()
-        session.refresh(user_db)
+        session.refresh(current_user)
 
-        return user_db
+        return current_user
     except IntegrityError:
         raise HTTPException(
             detail='Username ou email ja existe',

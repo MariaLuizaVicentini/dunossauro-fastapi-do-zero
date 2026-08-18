@@ -65,31 +65,21 @@ def test_read_users_with_users_sucess(client, user, token):
     assert response.json() == {'users': [user_schema]}
 
 
-def test_update_user_success(client, user):
+def test_update_user_success(client, user, token):
     payload = {
         'username': 'malu',
         'email': 'test@malu.com',
         'password': 'vodoeprajacu',
     }
 
-    response = client.put('/users/1', json=payload)
+    response = client.put(
+        '/users/1', json=payload, headers={'Authorization': f'Bearer {token}'}
+    )
 
     assert response.status_code == HTTPStatus.OK
 
 
-def test_update_user_error(client):
-    payload = {
-        'username': 'malu',
-        'email': 'test@malu.com',
-        'password': 'vodoeprajacu',
-    }
-
-    response = client.put('/users/3', json=payload)
-
-    assert response.status_code == HTTPStatus.NOT_FOUND
-
-
-def test_update_integrity_error(client, user):
+def test_update_integrity_error(client, user, token):
     # insere o segundo user: fausto jaguara
     client.post(
         '/users',
@@ -103,6 +93,7 @@ def test_update_integrity_error(client, user):
     # altera o user das fixture pra fausto jaguara
     response = client.put(
         f'/users/{user.id}',
+        headers={'Authorization': f'Bearer {token}'},
         json={
             'username': 'fausto',
             'email': 'bob@example.com',
