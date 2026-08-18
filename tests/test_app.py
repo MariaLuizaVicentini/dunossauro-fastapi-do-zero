@@ -38,17 +38,28 @@ def test_create_integrity_error(client, user):
     assert response.json() == {'detail': 'Username ou email ja existe'}
 
 
-def test_read_users_sucess(client):
-    response = client.get('/users')
+def test_read_users_sucess(client, token):
+    response = client.get(
+        '/users',
+        headers={'Authorization': f'Bearer {token}'},
+    )
 
     assert response.status_code == HTTPStatus.OK
-    assert response.json() == {'users': []}
+    assert response.json() == {
+        'users': [
+            {
+                'id': 1,
+                'username': 'Teste',
+                'email': 'teste@test.com',
+            },
+        ],
+    }
 
 
-def test_read_users_with_users_sucess(client, user):
+def test_read_users_with_users_sucess(client, user, token):
     user_schema = UserPublic.model_validate(user).model_dump()
 
-    response = client.get('/users')
+    response = client.get('/users', headers={'Authorization': f'Bearer {token}'})
 
     assert response.status_code == HTTPStatus.OK
     assert response.json() == {'users': [user_schema]}
