@@ -18,6 +18,10 @@ Na raiz do projeto, crie um arquivo `.env` com:
 
 ```env
 DATABASE_URL="sqlite:///./database.db"
+
+SECRET_KEY = 'your-secret-key'
+ALGORITHM = 'HS256'
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 ```
 
 # Execute as migrations
