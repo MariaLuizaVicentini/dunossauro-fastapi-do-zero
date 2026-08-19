@@ -2,14 +2,14 @@ from http import HTTPStatus
 
 from jwt import decode
 
-from dunossauro_fastapi.security import ALGORITHM, SECRET_KEY, create_access_token
+from dunossauro_fastapi.security import create_access_token, settings
 
 
 def test_jwt():
     data = {'test': 'test'}
     token = create_access_token(data)
 
-    decoded = decode(token, SECRET_KEY, algorithms=ALGORITHM)
+    decoded = decode(token, settings.SECRET_KEY, algorithms=settings.ALGORITHM)
     assert decoded['test'] == data['test']
     assert 'exp' in decoded  # testa se o valor de exp foi add ao tokenj
 
