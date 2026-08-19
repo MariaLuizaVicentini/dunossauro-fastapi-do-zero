@@ -1,4 +1,5 @@
 from http import HTTPStatus
+from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
@@ -20,12 +21,15 @@ from dunossauro_fastapi.security import (
 
 router = APIRouter(prefix='/users', tags=['users'])
 
+Session = Annotated[Session, Depends(get_session)]
+CurrenteUser = Annotated[User, Depends(get_current_user)]
+
 
 @router.post(
     '/',
     response_model=UserPublic,
 )
-def create_user(user: UserSchema, session: Session = Depends(get_session)):
+def create_user(user: UserSchema, session: Session):
 
     user_db = session.scalar(
         select(User).where((User.email == user.email) | (User.username == user.username))
@@ -54,10 +58,10 @@ def create_user(user: UserSchema, session: Session = Depends(get_session)):
     response_model=UserList,
 )
 def read_users(
+    session: Session,
+    current_user: CurrenteUser,
     limit: int = 10,
     offset: int = 0,
-    session: Session = Depends(get_session),
-    current_user=Depends(get_current_user),
 ):
     users = session.scalars(select(User).limit(limit).offset(offset))
     return {'users': users}
@@ -68,10 +72,10 @@ def read_users(
     response_model=UserPublic,
 )
 def update_user(
+    session: Session,
+    current_user: CurrenteUser,
     user_id: int,
     user: UserSchema,
-    session: Session = Depends(get_session),
-    current_user: User = Depends(get_current_user),
 ):
     if current_user.id != user_id:
         raise HTTPException(
@@ -100,9 +104,9 @@ def update_user(
     response_model=Message,
 )
 def delete_user(
+    session: Session,
+    current_user: CurrenteUser,
     user_id: int,
-    session: Session = Depends(get_session),
-    current_user: User = Depends(get_current_user),
 ):
     if current_user.id != user_id:
         raise HTTPException(
